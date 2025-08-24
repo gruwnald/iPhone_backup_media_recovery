@@ -1,3 +1,4 @@
 recovered_media
 .vscode
 .venv
+.DS_Store
