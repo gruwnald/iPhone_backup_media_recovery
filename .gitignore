@@ -2,3 +2,17 @@ recovered_media
 .vscode
 .venv
 .DS_Store
+
+# PyInstaller build folders
+build/
+dist/
+*.spec
+
+# Optional cache and temp files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Any logs or temporary files your script generates
+*.log

@@ -5,7 +5,8 @@ import os
 import hashlib
 import shutil
 from datetime import datetime as dt
-import click
+import tkinter as tk
+from tkinter import filedialog
 
 mbdx = {}
 
@@ -112,9 +113,17 @@ def create_folder_in_not_exists(name):
         os.makedirs(name)
 
 
-@click.command()
-@click.argument("backup_path", type=click.Path(exists=True, file_okay=False))
-def main(backup_path):
+# @click.command()
+# @click.argument("backup_path", type=click.Path(exists=True, file_okay=False))
+def main():
+    root = tk.Tk()
+    root.withdraw()  # hide the main window
+
+    backup_path = filedialog.askdirectory(title="Select backup folder")
+    if not backup_path:
+        print("No folder selected, exiting")
+        return
+
     mbdb_path = os.path.join(backup_path, 'Manifest.mbdb')
     mbdb = process_mbdb_file(mbdb_path)
     media_extensions = ['.jpg', '.jpeg', '.png', '.tiff', '.heic', '.mov', '.mp4', '.mp3', '.pdf']
@@ -146,7 +155,7 @@ def main(backup_path):
         else:
             fileinfo['fileID'] = "<nofileID>"
             print("No fileID found for", fileinfo_str(fileinfo, verbose=True), file=sys.stderr)
-    print(f"Recovered {media_recovered} media files!")
+    print(f"Recovered {media_recovered} media files to '{os.path.abspath(dest_folder)}'.")
 
 
 if __name__ == "__main__":
